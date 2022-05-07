@@ -3,12 +3,18 @@ package com.dmdev.tasktracker.repositories
 import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.models.CategoryModel
 import com.dmdev.tasktracker.data.models.CategoryIcon
+import com.dmdev.tasktracker.di.modules.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CategoriesRepository(private val ioDispatcher: CoroutineDispatcher) {
+@Singleton
+class CategoriesRepository @Inject constructor(
+    @DefaultDispatcher private val ioDispatcher: CoroutineDispatcher
+) {
     suspend fun getAllCategories() : Flow<ResultWrapper<List<CategoryModel>>> {
         return flow {
             emit(ResultWrapper.Loading)

@@ -2,13 +2,19 @@ package com.dmdev.tasktracker.repositories
 
 import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.models.TaskModel
+import com.dmdev.tasktracker.di.modules.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.util.*
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TasksRepository(private val ioDispatcher: CoroutineDispatcher) {
+@Singleton
+class TasksRepository @Inject constructor(
+    @DefaultDispatcher private val ioDispatcher: CoroutineDispatcher
+) {
     suspend fun getAllTasks(): Flow<ResultWrapper<List<TaskModel>>> {
         return flow {
             emit(ResultWrapper.Loading)

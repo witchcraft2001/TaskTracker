@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dmdev.tasktracker.ui.theme.home.Home
+import com.dmdev.tasktracker.ui.theme.home.HomeViewModel
 import com.dmdev.tasktracker.ui.theme.task_edit.TaskEdit
 
 @Composable
@@ -18,7 +20,7 @@ fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {
         startDestination = Screen.Home.route
     ) {
         composable(Screen.Home.route) {
-            Home(navState = appState)
+            Home(navState = appState, hiltViewModel())
         }
         composable(Screen.TaskEdit.route) {
             TaskEdit(navState = appState)

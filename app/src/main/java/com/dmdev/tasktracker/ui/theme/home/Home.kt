@@ -11,7 +11,7 @@ import com.dmdev.tasktracker.navigation.NavState
 import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
-fun Home(navState: NavState) {
+fun Home(navState: NavState, vm: HomeViewModel) {
     Surface(modifier = Modifier.fillMaxSize(), color = BaseTheme.colors.background) {
         Column {
             Text(text = "Hello!")

@@ -12,7 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.dmdev.tasktracker.navigation.TaskTrackerNavigation
 import com.dmdev.tasktracker.ui.theme.BaseTheme
 import com.dmdev.tasktracker.ui.theme.TaskTrackerTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
