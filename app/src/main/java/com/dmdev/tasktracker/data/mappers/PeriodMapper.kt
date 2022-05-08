@@ -1,8 +1,8 @@
 package com.dmdev.tasktracker.data.mappers
 
 import com.dmdev.tasktracker.data.domain.Period
-import com.dmdev.tasktracker.data.models.PeriodModel
+import com.dmdev.tasktracker.data.data.PeriodData
 
 object PeriodMapper {
-    fun mapToDomain(model: PeriodModel) = Period(model.id, model.taskId, model.startedAt, model.endedAt)
+    fun mapToDomain(data: PeriodData) = Period(data.id, data.taskId, data.startedAt, data.endedAt)
 }

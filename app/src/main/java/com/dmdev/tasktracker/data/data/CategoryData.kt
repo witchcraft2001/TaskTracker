@@ -1,6 +1,6 @@
-package com.dmdev.tasktracker.data.models
+package com.dmdev.tasktracker.data.data
 
-data class CategoryModel(
+data class CategoryData(
     val id: Long,
     val name: String,
     val color: Long,

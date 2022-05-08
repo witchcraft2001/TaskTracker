@@ -1,6 +1,6 @@
-package com.dmdev.tasktracker.data.models
+package com.dmdev.tasktracker.data.data
 
-data class TaskModel(
+data class TaskData(
     val id: Long,
     val name: String,
     val categoryId: Long,

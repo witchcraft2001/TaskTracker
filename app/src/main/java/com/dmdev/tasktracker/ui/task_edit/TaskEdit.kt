@@ -1,4 +1,4 @@
-package com.dmdev.tasktracker.ui.theme.task_edit
+package com.dmdev.tasktracker.ui.task_edit
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

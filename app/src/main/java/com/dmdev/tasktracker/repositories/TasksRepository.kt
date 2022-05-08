@@ -1,7 +1,7 @@
 package com.dmdev.tasktracker.repositories
 
 import com.dmdev.tasktracker.data.ResultWrapper
-import com.dmdev.tasktracker.data.models.TaskModel
+import com.dmdev.tasktracker.data.data.TaskData
 import com.dmdev.tasktracker.di.modules.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -15,13 +15,13 @@ import javax.inject.Singleton
 class TasksRepository @Inject constructor(
     @DefaultDispatcher private val dispatcher: CoroutineDispatcher
 ) {
-    suspend fun getAllTasks(): Flow<ResultWrapper<List<TaskModel>>> {
+    suspend fun getAllTasks(): Flow<ResultWrapper<List<TaskData>>> {
         return flow {
             emit(ResultWrapper.Loading)
             emit(
                 ResultWrapper.Success(
                     listOf(
-                        TaskModel(
+                        TaskData(
                             1,
                             "Разработать дизайн программы",
                             3,
@@ -29,7 +29,7 @@ class TasksRepository @Inject constructor(
                             null,
                             null
                         ),
-                        TaskModel(
+                        TaskData(
                             2,
                             "Разработать структуру данных программы",
                             3,
@@ -37,7 +37,7 @@ class TasksRepository @Inject constructor(
                             Date(2022, 4, 5, 8, 15).time,
                             null
                         ),
-                        TaskModel(
+                        TaskData(
                             3,
                             "Поклеить обои",
                             6,
@@ -45,7 +45,7 @@ class TasksRepository @Inject constructor(
                             Date(2022, 3, 10, 10, 15).time,
                             null
                         ),
-                        TaskModel(
+                        TaskData(
                             4,
                             "Сходить на концерт",
                             5,
@@ -53,7 +53,7 @@ class TasksRepository @Inject constructor(
                             Date(2022, 3, 7, 15, 45).time,
                             null
                         ),
-                        TaskModel(
+                        TaskData(
                             5,
                             "Помыть машину",
                             4,
@@ -61,7 +61,7 @@ class TasksRepository @Inject constructor(
                             Date(2022, 3, 15, 10, 15).time,
                             null
                         ),
-                        TaskModel(
+                        TaskData(
                             6,
                             "Поиграть в настолки",
                             2,

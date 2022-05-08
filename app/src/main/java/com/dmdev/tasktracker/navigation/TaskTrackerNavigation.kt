@@ -9,9 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.dmdev.tasktracker.ui.theme.home.Home
-import com.dmdev.tasktracker.ui.theme.home.HomeViewModel
-import com.dmdev.tasktracker.ui.theme.task_edit.TaskEdit
+import com.dmdev.tasktracker.ui.home.Home
+import com.dmdev.tasktracker.ui.task_edit.TaskEdit
 
 @Composable
 fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {

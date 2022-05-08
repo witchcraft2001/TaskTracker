@@ -1,4 +1,4 @@
-package com.dmdev.tasktracker.ui.theme.home
+package com.dmdev.tasktracker.ui.home
 
 import com.dmdev.tasktracker.data.domain.Task
 

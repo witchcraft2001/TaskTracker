@@ -1,6 +1,6 @@
-package com.dmdev.tasktracker.data.models
+package com.dmdev.tasktracker.data.data
 
-data class PeriodModel(
+data class PeriodData(
     val id: Long,
     val taskId: Long,
     val startedAt: Long,

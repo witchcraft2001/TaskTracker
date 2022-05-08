@@ -1,4 +1,4 @@
-package com.dmdev.tasktracker.data.models
+package com.dmdev.tasktracker.data.data
 
 import com.dmdev.tasktracker.R
 
