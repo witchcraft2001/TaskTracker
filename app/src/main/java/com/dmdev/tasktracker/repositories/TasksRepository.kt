@@ -18,7 +18,6 @@ class TasksRepository @Inject constructor(
     suspend fun getAllTasks(): Flow<ResultWrapper<List<TaskModel>>> {
         return flow {
             emit(ResultWrapper.Loading)
-
             emit(
                 ResultWrapper.Success(
                     listOf(

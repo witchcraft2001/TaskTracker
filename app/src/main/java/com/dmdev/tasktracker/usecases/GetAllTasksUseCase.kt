@@ -5,7 +5,9 @@ import com.dmdev.tasktracker.data.domain.Task
 import com.dmdev.tasktracker.data.mappers.TaskMapper
 import com.dmdev.tasktracker.repositories.CategoriesRepository
 import com.dmdev.tasktracker.repositories.TasksRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -37,6 +39,7 @@ class GetAllTasksUseCase @Inject constructor(
                             emit(ResultWrapper.Loading)
                     }
                 }
+                    .collect()
             } catch (e: Exception) {
                 emit(ResultWrapper.Error(e))
             }
