@@ -18,3 +18,7 @@ In the future i plan to use libraries:
 * Retrofit;
 * kotlinx.serialization;
 * Android Jetpack WorkManager;
+
+Some screenshots:
+
+![Main view](./screenshots/Screenshot_1.png?raw=true)
