@@ -65,8 +65,8 @@ fun Home(navState: NavState, vm: HomeViewModel) {
 
 @Composable
 fun TaskList(
-    items: List<Task>,
-    onItemClicked: (Task?) -> Unit
+    items: List<TaskModel>,
+    onItemClicked: (TaskModel?) -> Unit
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
         LazyColumn(
@@ -88,8 +88,8 @@ fun TaskList(
 
 @Composable
 fun TaskItem(
-    item: Task,
-    onItemClicked: (Task) -> Unit
+    item: TaskModel,
+    onItemClicked: (TaskModel) -> Unit
 ) {
     Row(
         modifier = Modifier.height(64.dp),
@@ -119,14 +119,24 @@ fun TaskItem(
                 overflow = TextOverflow.Clip,
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp)
             )
-            Text(
-                text = item.category.name,
-                style = BaseTheme.typography.text12R,
-                color = BaseTheme.colors.textGray,
-                maxLines = 1,
-                overflow = TextOverflow.Clip,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 4.dp)
-            )
+            Row(modifier = Modifier.padding(top = 4.dp)) {
+                Text(
+                    text = item.category.name,
+                    style = BaseTheme.typography.text12R,
+                    color = BaseTheme.colors.textGray,
+                    maxLines = 1,
+                    overflow = TextOverflow.Clip,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp).weight(1f)
+                )
+                Text(
+                    text = item.elapsedTime,
+                    style = BaseTheme.typography.text12R,
+                    color = BaseTheme.colors.textGray,
+                    maxLines = 1,
+                    overflow = TextOverflow.Clip,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                )
+            }
         }
     }
 }
