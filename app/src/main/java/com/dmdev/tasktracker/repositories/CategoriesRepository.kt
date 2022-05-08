@@ -13,7 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class CategoriesRepository @Inject constructor(
-    @DefaultDispatcher private val ioDispatcher: CoroutineDispatcher
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher
 ) {
     suspend fun getAllCategories() : Flow<ResultWrapper<List<CategoryModel>>> {
         return flow {
@@ -26,6 +26,6 @@ class CategoriesRepository @Inject constructor(
                 CategoryModel(5, "Chilling", 0xFF9FA8DA, CategoryIcon.MUSIC),
                 CategoryModel(6, "Building", 0xFF90CAF9, CategoryIcon.BRUSH)
             )))
-        }.flowOn(ioDispatcher)
+        }.flowOn(dispatcher)
     }
 }

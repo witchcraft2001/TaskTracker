@@ -2,9 +2,17 @@ package com.dmdev.tasktracker.data.mappers
 
 import com.dmdev.tasktracker.data.domain.Task
 import com.dmdev.tasktracker.data.models.CategoryModel
+import com.dmdev.tasktracker.data.models.PeriodModel
 import com.dmdev.tasktracker.data.models.TaskModel
 
 object TaskMapper {
-    fun mapToDomain(model: TaskModel, category: CategoryModel) =
-        Task(model.id, model.name, CategoryMapper.mapToDomain(category), model.startedAt, model.endedAt, model.deadline)
+    fun mapToDomain(model: TaskModel, category: CategoryModel, periods: List<PeriodModel> = emptyList()) =
+        Task(
+            model.id,
+            model.name,
+            CategoryMapper.mapToDomain(category),
+            model.startedAt,
+            model.endedAt,
+            model.deadline,
+            periods.map { PeriodMapper.mapToDomain(it) })
 }

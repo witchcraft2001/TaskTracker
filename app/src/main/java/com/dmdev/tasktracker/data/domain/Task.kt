@@ -6,5 +6,6 @@ data class Task(
     val category: Category,
     val startedAt: Long,
     val endedAt: Long?,
-    val deadline: Long?
+    val deadline: Long?,
+    val periods: List<Period> = emptyList()
 )
