@@ -3,5 +3,6 @@
 
     <style name="Theme.TaskTracker" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/light_gray</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
