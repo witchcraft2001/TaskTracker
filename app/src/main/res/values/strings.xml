@@ -8,5 +8,9 @@
     <string name="hint_pause_task">Отвлечься от задачи</string>
     <string name="hint_elapsed_time">Прошло времени</string>
     <string name="button_add_task">Добавить задачу</string>
+    <string name="new_task">Новая задача</string>
+    <string name="button_save">Сохранить</string>
+    <string name="text_name">Название</string>
+    <string name="text_not_chosen">Не указано</string>
     <string name="text_network_error">Произошла сетевая ошибка, пожалуйста, проверьте подключение к сети и повторите запрос</string>
 </resources>

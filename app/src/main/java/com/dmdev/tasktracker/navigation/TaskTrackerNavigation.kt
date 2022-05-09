@@ -22,7 +22,7 @@ fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {
             Home(navState = appState, hiltViewModel())
         }
         composable(Screen.TaskEdit.route) {
-            TaskEdit(navState = appState)
+            TaskEdit(navState = appState, hiltViewModel())
         }
     }
 }

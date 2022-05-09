@@ -1,13 +1,19 @@
 package com.dmdev.tasktracker.ui.theme
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
@@ -130,6 +136,37 @@ fun ToolbarTextWithBackAndActionButton(
 }
 
 @Composable
+fun ToolbarTextWithBack(
+    modifier: Modifier = Modifier.padding(16.dp),
+    contentColor: Color = BaseTheme.colors.textBlack,
+    title: String,
+    onBack: () -> Unit
+) {
+    Box(modifier = modifier.fillMaxWidth()) {
+        IconButton(
+            onClick = onBack,
+            modifier = Modifier
+                .size(24.dp)
+                .align(Alignment.CenterStart)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow_left),
+                contentDescription = "Back Icon",
+                tint = contentColor,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        Text(
+            text = title,
+            textAlign = TextAlign.Center,
+            color = contentColor,
+            style = BaseTheme.typography.title2,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
 fun ToolbarTextWithActionButton(
     title: String,
     actionIcon: @Composable (() -> Unit)? = null
@@ -145,6 +182,106 @@ fun ToolbarTextWithActionButton(
         if (actionIcon != null) {
             Box(modifier = Modifier.align(Alignment.CenterEnd)) {
                 actionIcon()
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun InputField(
+    modifier: Modifier,
+    value: String,
+    label: String,
+    hint: String,
+    isError: Boolean = false,
+    click: (() -> Unit)? = null,
+    errorText: String = "",
+    singleLine: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    trailingText: String = "",
+    trailingTint: Color = BaseTheme.colors.textRed,
+    onValueChange: (String) -> Unit
+) {
+    Column(modifier = modifier.clickable { if (click != null) click() }) {
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                text = label,
+                color = BaseTheme.colors.textDarkGray,
+                style = BaseTheme.typography.text15,
+                modifier = Modifier.align(Alignment.CenterStart)
+            )
+            if (trailingText.isNotEmpty()) {
+                Text(
+                    text = trailingText,
+                    color = trailingTint,
+                    style = BaseTheme.typography.text15,
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                )
+            }
+        }
+
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            textStyle = LocalTextStyle.current.copy(
+                fontSize = BaseTheme.typography.text15.fontSize,
+                fontWeight = BaseTheme.typography.text15.fontWeight
+            ),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                textColor = BaseTheme.colors.textBlack,
+                cursorColor = BaseTheme.colors.primaryDarkBlue,
+                backgroundColor = BaseTheme.colors.bgGray,
+                disabledTextColor = BaseTheme.colors.textDarkGray,
+                disabledBorderColor = BaseTheme.colors.bgGray,
+                focusedBorderColor = BaseTheme.colors.primaryLightBlue,
+                unfocusedBorderColor = BaseTheme.colors.bgGray,
+                errorBorderColor = BaseTheme.colors.textRed,
+                errorCursorColor = BaseTheme.colors.textRed,
+                disabledPlaceholderColor = BaseTheme.colors.textGray,
+                placeholderColor = BaseTheme.colors.textGray
+            ),
+            enabled = click == null,
+            isError = isError,
+            keyboardActions = keyboardActions,
+            keyboardOptions = keyboardOptions,
+            trailingIcon = trailingIcon,
+            leadingIcon = leadingIcon,
+            visualTransformation = visualTransformation,
+            placeholder = {
+                Text(
+                    text = hint,
+                    color = BaseTheme.colors.textGray,
+                    style = BaseTheme.typography.text15
+                )
+            },
+            singleLine = singleLine,
+            shape = RoundedCornerShape(6.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp)
+        )
+        if (isError) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_info_circle),
+                    contentDescription = null,
+                    tint = BaseTheme.colors.textRed,
+                    modifier = Modifier.size(16.dp)
+                )
+                Text(
+                    text = errorText,
+                    color = BaseTheme.colors.textRed,
+                    style = BaseTheme.typography.text12R,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
             }
         }
     }
