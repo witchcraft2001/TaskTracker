@@ -1,6 +1,7 @@
 package com.dmdev.tasktracker.ui.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -16,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
-import com.dmdev.tasktracker.data.domain.Task
 import com.dmdev.tasktracker.navigation.NavState
 import com.dmdev.tasktracker.ui.theme.*
 
@@ -46,9 +46,10 @@ fun Home(navState: NavState, vm: HomeViewModel) {
                     LoadingBox()
                 }
                 is HomeViewState.Success -> {
-                    TaskList(value.items) {
-                        navState.navigateToTaskEdit()
-                    }
+                    TaskList(
+                        value.items,
+                        onItemClicked = { navState.navigateToTaskEdit() },
+                        onControlButtonClicked = { vm.toggleTask(it) })
                 }
                 is HomeViewState.Error -> {
                     ErrorBox(
@@ -66,22 +67,29 @@ fun Home(navState: NavState, vm: HomeViewModel) {
 @Composable
 fun TaskList(
     items: List<TaskModel>,
-    onItemClicked: (TaskModel?) -> Unit
+    onItemClicked: (TaskModel?) -> Unit,
+    onControlButtonClicked: (TaskModel) -> Unit
 ) {
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column {
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(0.dp),
             modifier = Modifier
                 .weight(1f)
         ) {
             items(items.count()) { index ->
-                TaskItem(items[index], onItemClicked)
+                TaskItem(items[index], onItemClicked, onControlButtonClicked)
                 if (index < items.count() - 1) {
-                    Divider(color = BaseTheme.colors.bgGray)
+                    Divider(
+                        color = BaseTheme.colors.bgGray,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
                 }
             }
         }
-        ButtonTextCenter(text = "Добавить задачу") { onItemClicked(null) }
+        ButtonTextCenter(
+            text = stringResource(R.string.button_add_task),
+            modifier = Modifier.padding(16.dp)
+        ) { onItemClicked(null) }
     }
 }
 
@@ -89,10 +97,14 @@ fun TaskList(
 @Composable
 fun TaskItem(
     item: TaskModel,
-    onItemClicked: (TaskModel) -> Unit
+    onItemClicked: (TaskModel) -> Unit,
+    onControlButtonClicked: (TaskModel) -> Unit
 ) {
     Row(
-        modifier = Modifier.height(64.dp),
+        modifier = Modifier
+            .height(64.dp)
+            .clickable { onItemClicked(item) }
+            .padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -110,7 +122,9 @@ fun TaskItem(
                     .align(Alignment.Center)
             )
         }
-        Column {
+        Column(
+            modifier = Modifier.weight(1f)
+        ) {
             Text(
                 text = item.name,
                 style = BaseTheme.typography.text15B,
@@ -126,7 +140,15 @@ fun TaskItem(
                     color = BaseTheme.colors.textGray,
                     maxLines = 1,
                     overflow = TextOverflow.Clip,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp).weight(1f)
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp)
+                        .weight(1f)
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_timer),
+                    contentDescription = stringResource(R.string.hint_elapsed_time),
+                    tint = BaseTheme.colors.textGray,
+                    modifier = Modifier.size(16.dp)
                 )
                 Text(
                     text = item.elapsedTime,
@@ -134,9 +156,33 @@ fun TaskItem(
                     color = BaseTheme.colors.textGray,
                     maxLines = 1,
                     overflow = TextOverflow.Clip,
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp)
+                    modifier = Modifier.padding(start = 4.dp, end = 16.dp)
                 )
             }
+        }
+        IconButton(
+            onClick = { onControlButtonClicked(item) },
+            modifier = Modifier
+                .padding(8.dp)
+                .size(24.dp)
+        ) {
+            Icon(
+                painter = painterResource(
+                    id = if (item.endedAt == null) {
+                        R.drawable.ic_pause
+                    } else {
+                        R.drawable.ic_play
+                    }
+                ),
+                contentDescription = stringResource(
+                    id = if (item.endedAt == null) {
+                        R.string.hint_pause_task
+                    } else {
+                        R.string.hint_start_task
+                    }
+                ),
+                modifier = Modifier.size(24.dp)
+            )
         }
     }
 }

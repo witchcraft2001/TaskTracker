@@ -4,4 +4,8 @@
     <string name="button_reload">Перезагрузить</string>
     <string name="hint_add_task">Добавить задачу</string>
     <string name="text_days_count_format">%02d д.</string>
+    <string name="hint_start_task">Приступить к задаче</string>
+    <string name="hint_pause_task">Отвлечься от задачи</string>
+    <string name="hint_elapsed_time">Прошло времени</string>
+    <string name="button_add_task">Добавить задачу</string>
 </resources>

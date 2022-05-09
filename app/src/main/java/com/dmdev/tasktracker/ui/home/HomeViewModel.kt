@@ -40,4 +40,8 @@ class HomeViewModel @Inject constructor(
     fun reloadTasks() {
         loadTasks()
     }
+
+    fun toggleTask(item: TaskModel) {
+
+    }
 }
