@@ -17,12 +17,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
+import com.dmdev.tasktracker.core.common.UiState
+import com.dmdev.tasktracker.core.extensions.getOrElse
 import com.dmdev.tasktracker.navigation.NavState
 import com.dmdev.tasktracker.ui.theme.*
 
 @Composable
 fun Home(navState: NavState, vm: HomeViewModel) {
-    val state = vm.uiState.collectAsState()
     Surface(modifier = Modifier.fillMaxSize(), color = BaseTheme.colors.background) {
         Column {
             ToolbarTextWithActionButton(
@@ -41,19 +42,27 @@ fun Home(navState: NavState, vm: HomeViewModel) {
                     }
                 }
             )
-            when (val value = state.value) {
-                is HomeViewState.Loading -> {
+            when (val state = vm.uiState.collectAsState().value) {
+                is UiState.Loading -> {
                     LoadingBox()
                 }
-                is HomeViewState.Success -> {
+                is UiState.Success -> {
                     TaskList(
-                        value.items,
+                        state.value,
                         onItemClicked = { navState.navigateToTaskEdit() },
                         onControlButtonClicked = { vm.toggleTask(it) })
                 }
-                is HomeViewState.Error -> {
+                is UiState.Error -> {
                     ErrorBox(
-                        message = value.exception.message ?: stringResource(R.string.text_something_was_wrong),
+                        message = state.message.getOrElse(stringResource(R.string.text_something_was_wrong)),
+                        buttonText = stringResource(R.string.button_reload)
+                    ) {
+                        vm.reloadTasks()
+                    }
+                }
+                is UiState.NetworkError -> {
+                    ErrorBox(
+                        message = stringResource(R.string.text_network_error),
                         buttonText = stringResource(R.string.button_reload)
                     ) {
                         vm.reloadTasks()
