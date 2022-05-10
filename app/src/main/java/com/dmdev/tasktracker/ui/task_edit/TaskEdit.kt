@@ -37,9 +37,11 @@ fun TaskEdit(navState: NavState, vm: TaskEditViewModel) {
                     LoadingBox()
                 }
                 is UiState.Success -> TaskEditForm(navState, state.value, vm)
-                else -> {
-                    throw IllegalStateException("Unknown state $state")
+                is UiState.Finished -> {
+                    vm.dropToLoadState()
+                    navState.navigateBack()
                 }
+                else -> throw IllegalStateException("Unknown state $state")
             }
 
         }

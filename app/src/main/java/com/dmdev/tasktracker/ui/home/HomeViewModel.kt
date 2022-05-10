@@ -17,10 +17,6 @@ class HomeViewModel @Inject constructor(
     private val timeUtils: TimeUtils
 ) : BaseViewModel<UiState<List<TaskModel>>>(UiState.Loading()) {
 
-    init {
-        loadTasks()
-    }
-
     private fun loadTasks() {
         viewModelScope.launch {
             allTasksUseCase.getTasksWithCategoriesAndPeriods().collect { result ->

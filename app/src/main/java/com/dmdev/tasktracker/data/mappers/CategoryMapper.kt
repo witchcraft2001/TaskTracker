@@ -5,4 +5,5 @@ import com.dmdev.tasktracker.data.data.CategoryData
 
 object CategoryMapper {
     fun mapToDomain(data: CategoryData) = Category(data.id, data.name, data.color, data.icon)
+    fun mapToData(domain: Category) = CategoryData(domain.id, domain.name, domain.color, domain.icon)
 }

@@ -1,16 +1,23 @@
 package com.dmdev.tasktracker.ui.task_edit
 
+import androidx.lifecycle.viewModelScope
 import com.dmdev.tasktracker.core.common.BaseViewModel
-import com.dmdev.tasktracker.core.common.SimpleUiState
 import com.dmdev.tasktracker.core.common.UiState
+import com.dmdev.tasktracker.core.extensions.getOrElse
+import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.domain.Category
+import com.dmdev.tasktracker.usecases.AddTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskEditViewModel @Inject constructor() : BaseViewModel<UiState<TaskEditViewState>>(UiState.Loading()) {
+class TaskEditViewModel @Inject constructor(
+    val addTaskUseCase: AddTaskUseCase
+) : BaseViewModel<UiState<TaskEditViewState>>(UiState.Loading()) {
     private val _state = MutableStateFlow(TaskEditViewState())
     val state: StateFlow<TaskEditViewState> = _state
 
@@ -21,7 +28,24 @@ class TaskEditViewModel @Inject constructor() : BaseViewModel<UiState<TaskEditVi
     }
 
     fun save() {
-
+        if (state.value.category == null) {
+            _state.value = state.value.copy(categoryError = true)
+            updateUiState()
+        } else {
+            viewModelScope.launch {
+                state.value.category?.let { category ->
+                    val name = state.value.name.getOrElse("unnamed")
+                    addTaskUseCase.addTask(name, category).collect { result ->
+                        when(result) {
+                            is ResultWrapper.Success -> _uiState.value = UiState.Finished()
+                            is ResultWrapper.Error -> _uiState.value = UiState.Error(result.exception.message.getOrElse(""))
+                            is ResultWrapper.Loading -> _uiState.value = UiState.Loading()
+                            else -> throw IllegalStateException("Unknown state $result")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     fun onNameUpdated(value: String) {
@@ -42,5 +66,9 @@ class TaskEditViewModel @Inject constructor() : BaseViewModel<UiState<TaskEditVi
 
     private fun updateUiState() {
         _uiState.value = UiState.Success(state.value)
+    }
+
+    fun dropToLoadState() {
+        _uiState.value = UiState.Loading()
     }
 }
