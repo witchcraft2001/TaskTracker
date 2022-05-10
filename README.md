@@ -22,3 +22,5 @@ In the future i plan to use libraries:
 Some screenshots:
 
 ![Main view](./screenshots/Screenshot_1.png?raw=true)
+![Task edit view](./screenshots/Screenshot_2.png?raw=true)
+![Category choose view](./screenshots/Screenshot_3.png?raw=true)
