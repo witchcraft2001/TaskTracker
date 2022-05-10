@@ -9,6 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.dmdev.tasktracker.core.extensions.getOrElse
+import com.dmdev.tasktracker.ui.category_chooser.CategoryChooser
 import com.dmdev.tasktracker.ui.home.Home
 import com.dmdev.tasktracker.ui.task_edit.TaskEdit
 
@@ -23,6 +26,14 @@ fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {
         }
         composable(Screen.TaskEdit.route) {
             TaskEdit(navState = appState, hiltViewModel())
+        }
+        composable(Screen.CategoryChooser.route, arguments = listOf(navArgument("categoryId") { nullable = true })) {
+            TaskEdit(navState = appState, hiltViewModel())
+            CategoryChooser(
+                navState = appState,
+                it.arguments?.getString("categoryId")?.toLongOrNull(),
+                hiltViewModel()
+            )
         }
     }
 }
@@ -46,6 +57,10 @@ class NavState(
         navController.navigate(Screen.TaskEdit.route)
     }
 
+    fun navigateToCategoryChooser(categoryId: Long?) {
+        navController.navigate(Screen.CategoryChooser.createRoute(categoryId))
+    }
+
     fun navigateToHome() {
         navController.navigate(Screen.Home.route)
     }
@@ -54,4 +69,7 @@ class NavState(
 sealed class Screen(val route: String) {
     object Home : Screen("home")
     object TaskEdit : Screen("tasks/edit")
+    object CategoryChooser : Screen("categories?categoryId={categoryId}") {
+        fun createRoute(categoryId: Long?) = route.replace("{categoryId}", categoryId?.toString().getOrElse(""))
+    }
 }

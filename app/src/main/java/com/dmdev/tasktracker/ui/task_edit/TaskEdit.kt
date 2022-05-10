@@ -9,12 +9,20 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
 import com.dmdev.tasktracker.core.common.UiState
+import com.dmdev.tasktracker.data.Constants.CATEGORY_CHOOSER_RESULT_KEY
+import com.dmdev.tasktracker.data.domain.Category
+import com.dmdev.tasktracker.navigation.GetOnceResult
 import com.dmdev.tasktracker.navigation.NavState
-import com.dmdev.tasktracker.ui.theme.*
+import com.dmdev.tasktracker.ui.ButtonTextCenter
+import com.dmdev.tasktracker.ui.InputField
+import com.dmdev.tasktracker.ui.LoadingBox
+import com.dmdev.tasktracker.ui.ToolbarTextWithBack
+import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
 fun TaskEdit(navState: NavState, vm: TaskEditViewModel) {
@@ -28,7 +36,7 @@ fun TaskEdit(navState: NavState, vm: TaskEditViewModel) {
                 is UiState.Loading -> {
                     LoadingBox()
                 }
-                is UiState.Success -> TaskEditForm(state.value, vm)
+                is UiState.Success -> TaskEditForm(navState, state.value, vm)
                 else -> {
                     throw IllegalStateException("Unknown state $state")
                 }
@@ -39,20 +47,59 @@ fun TaskEdit(navState: NavState, vm: TaskEditViewModel) {
 }
 
 @Composable
-fun TaskEditForm(state: TaskEditViewState, vm: TaskEditViewModel) {
+fun TaskEditForm(
+    navState: NavState,
+    state: TaskEditViewState,
+    vm: TaskEditViewModel
+) {
     Column(modifier = Modifier.padding(16.dp)) {
+
+        navState.navController.currentBackStackEntry?.also { entry ->
+            navState.navController.GetOnceResult<Category>(entry, keyResult = CATEGORY_CHOOSER_RESULT_KEY) {
+                vm.onCategorySelected(it)
+            }
+        }
 
         var inputName by remember {
             mutableStateOf(state.name)
         }
+
+        val inputCategory by remember {
+            mutableStateOf(state.category)
+        }
+
+        val categoryError by remember {
+            mutableStateOf(state.categoryError)
+        }
+
+        val nameError by remember {
+            mutableStateOf(state.nameError)
+        }
+
+        InputField(
+            modifier = Modifier.padding(top = 16.dp),
+            value = inputCategory?.name ?: "",
+            label = stringResource(R.string.text_category),
+            hint = stringResource(R.string.text_not_chosen),
+            isError = categoryError,
+            errorText = if (categoryError) stringResource(R.string.text_not_chosen) else "",
+            click = {
+                navState.navigateToCategoryChooser(inputCategory?.id)
+            },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Sentences
+            ),
+            onValueChange = {}
+        )
 
         InputField(
             modifier = Modifier.padding(top = 16.dp),
             value = inputName,
             label = stringResource(id = R.string.text_name),
             hint = stringResource(R.string.text_not_chosen),
-            isError = state.nameError,
-            errorText = if (state.nameError) stringResource(R.string.text_not_chosen) else "",
+            isError = nameError,
+            errorText = if (nameError) stringResource(R.string.text_not_chosen) else "",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text
             ),

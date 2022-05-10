@@ -13,4 +13,7 @@
     <string name="text_name">Название</string>
     <string name="text_not_chosen">Не указано</string>
     <string name="text_network_error">Произошла сетевая ошибка, пожалуйста, проверьте подключение к сети и повторите запрос</string>
+    <string name="text_category">Категория</string>
+    <string name="hint_add_category">Добавить категорию</string>
+    <string name="button_add_category">Добавить категорию</string>
 </resources>

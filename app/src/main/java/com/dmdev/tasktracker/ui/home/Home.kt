@@ -20,6 +20,10 @@ import com.dmdev.tasktracker.R
 import com.dmdev.tasktracker.core.common.UiState
 import com.dmdev.tasktracker.core.extensions.getOrElse
 import com.dmdev.tasktracker.navigation.NavState
+import com.dmdev.tasktracker.ui.ButtonTextCenter
+import com.dmdev.tasktracker.ui.ErrorBox
+import com.dmdev.tasktracker.ui.LoadingBox
+import com.dmdev.tasktracker.ui.ToolbarTextWithActionButton
 import com.dmdev.tasktracker.ui.theme.*
 
 @Composable
@@ -55,14 +59,6 @@ fun Home(navState: NavState, vm: HomeViewModel) {
                 is UiState.Error -> {
                     ErrorBox(
                         message = state.message.getOrElse(stringResource(R.string.text_something_was_wrong)),
-                        buttonText = stringResource(R.string.button_reload)
-                    ) {
-                        vm.reloadTasks()
-                    }
-                }
-                is UiState.NetworkError -> {
-                    ErrorBox(
-                        message = stringResource(R.string.text_network_error),
                         buttonText = stringResource(R.string.button_reload)
                     ) {
                         vm.reloadTasks()

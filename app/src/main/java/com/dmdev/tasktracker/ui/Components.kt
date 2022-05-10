@@ -1,4 +1,4 @@
-package com.dmdev.tasktracker.ui.theme
+package com.dmdev.tasktracker.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,10 +13,12 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
+import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
 fun LoadingBox() {
@@ -45,7 +47,9 @@ fun ErrorBox(
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.align(Alignment.Center).padding(16.dp)
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(16.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_danger),
@@ -103,11 +107,12 @@ fun ButtonTextCenter(
 
 @Composable
 fun ToolbarTextWithBackAndActionButton(
+    modifier: Modifier = Modifier.padding(16.dp),
     title: String,
     actionIcon: @Composable (() -> Unit)? = null,
     onBack: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxWidth()) {
+    Box(modifier = modifier.fillMaxWidth()) {
         IconButton(
             onClick = onBack,
             modifier = Modifier
@@ -171,7 +176,11 @@ fun ToolbarTextWithActionButton(
     title: String,
     actionIcon: @Composable (() -> Unit)? = null
 ) {
-    Box(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         Text(
             text = title,
             textAlign = TextAlign.Center,
@@ -283,6 +292,53 @@ fun InputField(
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun SelectedItemWithIcon(
+    text: String,
+    isSelected: Boolean,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    click: () -> Unit
+) {
+    Row(modifier = Modifier
+        .clickable { click() }
+        .padding(horizontal = 16.dp, vertical = 8.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .align(Alignment.CenterVertically)
+        ) {
+            if (leadingIcon != null) {
+                Box {
+                    leadingIcon()
+                }
+            }
+            Text(
+                text = text,
+                style = BaseTheme.typography.text15M,
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Medium,
+                color = if (!isSelected) BaseTheme.colors.textBlack else BaseTheme.colors.primaryBlue,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
+
+        if (isSelected) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_check),
+                contentDescription = null,
+                tint = BaseTheme.colors.primaryBlue,
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .size(24.dp)
+                    .align(Alignment.CenterVertically)
+            )
         }
     }
 }
