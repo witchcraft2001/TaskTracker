@@ -64,27 +64,15 @@ fun TaskEditForm(
             mutableStateOf(state.name)
         }
 
-        val inputCategory by remember {
-            mutableStateOf(state.category)
-        }
-
-        val categoryError by remember {
-            mutableStateOf(state.categoryError)
-        }
-
-        val nameError by remember {
-            mutableStateOf(state.nameError)
-        }
-
         InputField(
             modifier = Modifier.padding(top = 16.dp),
-            value = inputCategory?.name ?: "",
+            value = state.category?.name ?: "",
             label = stringResource(R.string.text_category),
             hint = stringResource(R.string.text_not_chosen),
-            isError = categoryError,
-            errorText = if (categoryError) stringResource(R.string.text_not_chosen) else "",
+            isError = state.categoryError,
+            errorText = if (state.categoryError) stringResource(R.string.text_not_chosen) else "",
             click = {
-                navState.navigateToCategoryChooser(inputCategory?.id)
+                navState.navigateToCategoryChooser(state.category?.id)
             },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -98,8 +86,8 @@ fun TaskEditForm(
             value = inputName,
             label = stringResource(id = R.string.text_name),
             hint = stringResource(R.string.text_not_chosen),
-            isError = nameError,
-            errorText = if (nameError) stringResource(R.string.text_not_chosen) else "",
+            isError = state.nameError,
+            errorText = if (state.nameError) stringResource(R.string.text_not_chosen) else "",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text
             ),
