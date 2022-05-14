@@ -5,11 +5,8 @@ import com.dmdev.tasktracker.core.common.BaseViewModel
 import com.dmdev.tasktracker.core.common.UiState
 import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.domain.Category
-import com.dmdev.tasktracker.ui.task_edit.TaskEditViewState
 import com.dmdev.tasktracker.usecases.GetAllCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +22,7 @@ class CategoryChooserViewModel @Inject constructor(
 
     private fun loadCategories() {
         viewModelScope.launch {
-            allCategoriesUseCase.getAllCategories().collect { result ->
+            allCategoriesUseCase.execute().collect { result ->
                 when (result) {
                     is ResultWrapper.Success -> _uiState.value =
                         UiState.Success(result.result)

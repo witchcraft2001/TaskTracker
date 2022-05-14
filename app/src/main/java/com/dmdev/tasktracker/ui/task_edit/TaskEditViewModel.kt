@@ -35,7 +35,7 @@ class TaskEditViewModel @Inject constructor(
             viewModelScope.launch {
                 state.value.category?.let { category ->
                     val name = state.value.name.getOrElse("unnamed")
-                    addTaskUseCase.addTask(name, category).collect { result ->
+                    addTaskUseCase.execute(name, category).collect { result ->
                         when(result) {
                             is ResultWrapper.Success -> _uiState.value = UiState.Finished()
                             is ResultWrapper.Error -> _uiState.value = UiState.Error(result.exception.message.getOrElse(""))

@@ -9,13 +9,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class GetAllCategoriesUseCase @Inject constructor(
     private val categoriesRepository: CategoriesRepository,
 ) {
-    suspend fun getAllCategories(): Flow<ResultWrapper<List<Category>>> {
+    suspend fun execute(): Flow<ResultWrapper<List<Category>>> {
         return flow {
             emit(ResultWrapper.Loading)
             try {

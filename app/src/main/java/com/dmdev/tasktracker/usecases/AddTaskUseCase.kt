@@ -18,7 +18,7 @@ class AddTaskUseCase @Inject constructor(
     private val tasksRepository: TasksRepository,
     private val periodsRepository: PeriodsRepository,
 ) {
-    suspend fun addTask(name: String, category: Category): Flow<ResultWrapper<Task>> {
+    suspend fun execute(name: String, category: Category): Flow<ResultWrapper<Task>> {
         return flow {
             emit(ResultWrapper.Loading)
             try {

@@ -19,7 +19,7 @@ class HomeViewModel @Inject constructor(
 
     private fun loadTasks() {
         viewModelScope.launch {
-            allTasksUseCase.getTasksWithCategoriesAndPeriods().collect { result ->
+            allTasksUseCase.execute().collect { result ->
                 when (result) {
                     is ResultWrapper.Success -> _uiState.value =
                         UiState.Success(result.result.map { TaskModelMapper.mapToModel(it, timeUtils) })
