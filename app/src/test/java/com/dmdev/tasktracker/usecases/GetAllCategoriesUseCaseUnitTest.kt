@@ -27,7 +27,7 @@ class GetAllCategoriesUseCaseUnitTest {
     private val useCase = GetAllCategoriesUseCase(FakeCategoriesRepository())
 
     @Test
-    fun `UseCase return the same items`() = runBlocking {
+    fun `UseCase return the same items mapped to the domain model`() = runBlocking {
         val result = useCase.execute().toList()
 
         assertTrue(result.last() is ResultWrapper.Success<*>)

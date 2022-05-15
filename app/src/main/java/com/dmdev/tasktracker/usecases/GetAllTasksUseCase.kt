@@ -3,7 +3,7 @@ package com.dmdev.tasktracker.usecases
 import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.domain.Task
 import com.dmdev.tasktracker.data.mappers.TaskMapper
-import com.dmdev.tasktracker.repositories.CategoriesRepositoryImpl
+import com.dmdev.tasktracker.repositories.CategoriesRepository
 import com.dmdev.tasktracker.repositories.PeriodsRepository
 import com.dmdev.tasktracker.repositories.TasksRepository
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class GetAllTasksUseCase @Inject constructor(
     private val tasksRepository: TasksRepository,
-    private val categoriesRepository: CategoriesRepositoryImpl,
+    private val categoriesRepository: CategoriesRepository,
     private val periodsRepository: PeriodsRepository,
 ) {
     suspend fun execute(): Flow<ResultWrapper<List<Task>>> {
