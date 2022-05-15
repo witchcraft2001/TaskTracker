@@ -24,12 +24,13 @@ import com.dmdev.tasktracker.data.Constants.CATEGORY_CHOOSER_RESULT_KEY
 import com.dmdev.tasktracker.data.domain.Category
 import com.dmdev.tasktracker.navigation.NavState
 import com.dmdev.tasktracker.ui.*
+import com.dmdev.tasktracker.ui.category_chooser.models.CategoryChooserEvent
 import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
 fun CategoryChooser(navState: NavState, categoryId: Long?, vm: CategoryChooserViewModel) {
     LaunchedEffect(Unit) {
-        vm.reloadCategories()
+        vm.obtainEvent(CategoryChooserEvent.ReloadEvent)
     }
     Surface(modifier = Modifier.fillMaxSize(), color = BaseTheme.colors.background) {
         Column {
@@ -37,9 +38,7 @@ fun CategoryChooser(navState: NavState, categoryId: Long?, vm: CategoryChooserVi
                 title = stringResource(R.string.text_category),
                 actionIcon = {
                     IconButton(
-                        onClick = {
-                                  navState.navigateToCategoryEdit(null)
-                                  },
+                        onClick = { navState.navigateToCategoryEdit(null) },
                         modifier = Modifier
                             .size(24.dp)
                     ) {
@@ -67,14 +66,16 @@ fun CategoryChooser(navState: NavState, categoryId: Long?, vm: CategoryChooserVi
                                 ?.savedStateHandle
                                 ?.set(CATEGORY_CHOOSER_RESULT_KEY, it)
                             navState.navigateBack()
-                        })
+                        },
+                        onAddClicked = {navState.navigateToCategoryEdit(null)}
+                    )
                 }
                 is UiState.Error -> {
                     ErrorBox(
                         message = state.message.getOrElse(stringResource(R.string.text_something_was_wrong)),
                         buttonText = stringResource(R.string.button_reload)
                     ) {
-                        vm.reloadCategories()
+                        vm.obtainEvent(CategoryChooserEvent.ReloadEvent)
                     }
                 }
             }
@@ -86,7 +87,8 @@ fun CategoryChooser(navState: NavState, categoryId: Long?, vm: CategoryChooserVi
 fun CategoryList(
     items: List<Category>,
     selectedItemId: Long?,
-    onItemClicked: (Category?) -> Unit
+    onItemClicked: (Category?) -> Unit,
+    onAddClicked: () -> Unit
 ) {
     Column {
         LazyColumn(
@@ -128,7 +130,7 @@ fun CategoryList(
         }
         ButtonTextCenter(
             text = stringResource(R.string.button_add_category),
-            modifier = Modifier.padding(16.dp)
-        ) { onItemClicked(null) }
+            modifier = Modifier.padding(16.dp),
+            onClick = onAddClicked)
     }
 }
