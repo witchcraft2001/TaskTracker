@@ -1,9 +1,13 @@
 package com.dmdev.tasktracker.ui.home
 
 import androidx.lifecycle.viewModelScope
-import com.dmdev.tasktracker.core.common.BaseViewModel
+import com.dmdev.tasktracker.core.common.BaseViewModelEventHandler
 import com.dmdev.tasktracker.core.common.UiState
 import com.dmdev.tasktracker.data.ResultWrapper
+import com.dmdev.tasktracker.ui.home.models.TaskListEvent
+import com.dmdev.tasktracker.ui.home.models.TaskListViewState
+import com.dmdev.tasktracker.ui.home.models.TaskModel
+import com.dmdev.tasktracker.ui.home.models.TaskModelMapper
 import com.dmdev.tasktracker.usecases.GetAllTasksUseCase
 import com.dmdev.tasktracker.utils.TimeUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,30 +19,43 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val allTasksUseCase: GetAllTasksUseCase,
     private val timeUtils: TimeUtils
-) : BaseViewModel<UiState<List<TaskModel>>>(UiState.Loading()) {
+) : BaseViewModelEventHandler<TaskListViewState, TaskListEvent>(TaskListViewState.ListViewState()) {
+
+    override fun obtainEvent(event: TaskListEvent) {
+        when (val state = uiState.value) {
+            is TaskListViewState.ErrorViewState -> reduce(event, state)
+            is TaskListViewState.ListViewState -> reduce(event, state)
+        }
+    }
+
+    private fun reduce(event: TaskListEvent, state: TaskListViewState.ErrorViewState) {
+        when (event) {
+            is TaskListEvent.ReloadEvent -> loadTasks()
+        }
+    }
+
+    private fun reduce(event: TaskListEvent, state: TaskListViewState.ListViewState) {
+        when (event) {
+            is TaskListEvent.ReloadEvent -> loadTasks()
+            is TaskListEvent.ToggleTaskEvent -> toggleTask(event.task)
+        }
+    }
 
     private fun loadTasks() {
         viewModelScope.launch {
             allTasksUseCase.execute().collect { result ->
                 when (result) {
                     is ResultWrapper.Success -> _uiState.value =
-                        UiState.Success(result.result.map { TaskModelMapper.mapToModel(it, timeUtils) })
-                    is ResultWrapper.Loading -> _uiState.value = UiState.Loading()
-                    is ResultWrapper.Error -> _uiState.value = if (result.exception.message.isNullOrEmpty()) {
-                        UiState.NetworkError()
-                    } else {
-                        UiState.Error(result.exception.message ?: "")
-                    }
+                        TaskListViewState.ListViewState(result.result.map { TaskModelMapper.mapToModel(it, timeUtils) })
+                    is ResultWrapper.Loading -> _uiState.value = TaskListViewState.ListViewState(isLoading = true)
+                    is ResultWrapper.Error -> _uiState.value =
+                        TaskListViewState.ErrorViewState(result.exception.message ?: "")
                 }
             }
         }
     }
 
-    fun reloadTasks() {
-        loadTasks()
-    }
-
-    fun toggleTask(item: TaskModel) {
+    private fun toggleTask(item: TaskModel) {
 
     }
 }

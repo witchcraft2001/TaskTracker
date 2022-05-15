@@ -7,21 +7,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
 import com.dmdev.tasktracker.R
 import com.dmdev.tasktracker.core.common.UiState
 import com.dmdev.tasktracker.core.extensions.getOrElse
@@ -30,6 +24,9 @@ import com.dmdev.tasktracker.ui.ButtonTextCenter
 import com.dmdev.tasktracker.ui.ErrorBox
 import com.dmdev.tasktracker.ui.LoadingBox
 import com.dmdev.tasktracker.ui.ToolbarTextWithActionButton
+import com.dmdev.tasktracker.ui.home.models.TaskListEvent
+import com.dmdev.tasktracker.ui.home.models.TaskListViewState
+import com.dmdev.tasktracker.ui.home.models.TaskModel
 import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
@@ -38,7 +35,7 @@ fun Home(
     vm: HomeViewModel,
 ) {
     LaunchedEffect(Unit) {
-        vm.reloadTasks()
+        vm.obtainEvent(TaskListEvent.ReloadEvent)
     }
 
     Surface(modifier = Modifier.fillMaxSize(), color = BaseTheme.colors.background) {
@@ -60,24 +57,24 @@ fun Home(
                 }
             )
             when (val state = vm.uiState.collectAsState().value) {
-                is UiState.Loading -> {
-                    LoadingBox()
+                is TaskListViewState.ListViewState -> {
+                    if (state.isLoading) {
+                        LoadingBox()
+                    } else {
+                        TaskList(
+                            state.items,
+                            onItemClicked = { navState.navigateToTaskEdit() },
+                            onControlButtonClicked = { vm.obtainEvent(TaskListEvent.ToggleTaskEvent(it)) })
+                    }
                 }
-                is UiState.Success -> {
-                    TaskList(
-                        state.value,
-                        onItemClicked = { navState.navigateToTaskEdit() },
-                        onControlButtonClicked = { vm.toggleTask(it) })
-                }
-                is UiState.Error -> {
+                is TaskListViewState.ErrorViewState -> {
                     ErrorBox(
                         message = state.message.getOrElse(stringResource(R.string.text_something_was_wrong)),
                         buttonText = stringResource(R.string.button_reload)
                     ) {
-                        vm.reloadTasks()
+                        vm.obtainEvent(TaskListEvent.ReloadEvent)
                     }
                 }
-                else -> throw IllegalStateException("Unknown state $state")
             }
         }
     }

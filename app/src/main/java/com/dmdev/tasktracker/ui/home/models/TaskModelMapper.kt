@@ -1,4 +1,4 @@
-package com.dmdev.tasktracker.ui.home
+package com.dmdev.tasktracker.ui.home.models
 
 import com.dmdev.tasktracker.data.domain.Task
 import com.dmdev.tasktracker.utils.TimeUtils
