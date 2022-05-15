@@ -40,7 +40,6 @@ class AddTaskUseCase @Inject constructor(
                 val newTask = tasksRepository.add(task)
                 val period = PeriodData(id = 0, taskId = newTask.id, startedAt = startTime, endedAt = null)
                 val newPeriod = periodsRepository.add(period)
-                delay(500)
                 emit(
                     ResultWrapper.Success(
                         TaskMapper.mapToDomain(

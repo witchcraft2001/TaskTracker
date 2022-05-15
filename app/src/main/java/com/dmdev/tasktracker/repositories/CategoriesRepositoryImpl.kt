@@ -34,7 +34,7 @@ class CategoriesRepositoryImpl @Inject constructor(
 
     override suspend fun add(category: CategoryData): CategoryData {
         val max = items.maxByOrNull { item -> item.id }
-        val newCategory = category.copy(id = max?.id ?: 1)
+        val newCategory = category.copy(id = (max?.id ?: 0) + 1)
         items.add(newCategory)
         return newCategory
     }

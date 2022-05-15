@@ -9,4 +9,5 @@ interface TasksRepository {
     suspend fun getAllUnfinishedTasks() : List<TaskData>
     suspend fun update(task: TaskData) : TaskData
     suspend fun add(task: TaskData) : TaskData
+    suspend fun get(id: Long) : TaskData
 }

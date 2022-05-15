@@ -85,7 +85,7 @@ class PeriodsRepositoryImpl @Inject constructor(
 
     override suspend fun add(period: PeriodData): PeriodData {
         val max = items.maxByOrNull { item -> item.id }
-        val newPeriod = period.copy(id = max?.id ?: 1)
+        val newPeriod = period.copy(id = (max?.id ?: 0) + 1)
         items.add(newPeriod)
         return newPeriod
     }

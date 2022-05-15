@@ -71,17 +71,16 @@ class TasksRepositoryImpl @Inject constructor(
     override suspend fun getAllTasks(): Flow<ResultWrapper<List<TaskData>>> {
         return flow {
             emit(ResultWrapper.Loading)
-            delay(1000L)
             emit(ResultWrapper.Success(items))
         }.flowOn(dispatcher)
     }
 
-    override suspend fun getAllUnfinishedTasks() : List<TaskData> {
+    override suspend fun getAllUnfinishedTasks(): List<TaskData> {
         return items.filter { item -> item.endedAt == null }
     }
 
-    override suspend fun update(task: TaskData) : TaskData {
-        val index = items.indexOfFirst { item -> item.id == task.id}
+    override suspend fun update(task: TaskData): TaskData {
+        val index = items.indexOfFirst { item -> item.id == task.id }
         if (index >= 0) {
             items.removeAt(index)
         }
@@ -89,10 +88,15 @@ class TasksRepositoryImpl @Inject constructor(
         return task
     }
 
-    override suspend fun add(task: TaskData) : TaskData {
+    override suspend fun add(task: TaskData): TaskData {
         val max = items.maxByOrNull { item -> item.id }
-        val newTask = task.copy(id = max?.id ?: 1)
+        val newTask = task.copy(id = (max?.id  ?: 0) + 1)
         items.add(newTask)
         return newTask
+    }
+
+    override suspend fun get(id: Long): TaskData {
+        return items.firstOrNull { task -> task.id == id }
+            ?: throw IllegalArgumentException("Unable to find task with id=$id")
     }
 }
