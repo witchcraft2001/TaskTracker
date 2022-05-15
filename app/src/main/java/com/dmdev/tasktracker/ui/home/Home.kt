@@ -130,7 +130,7 @@ fun TaskItem(
             modifier = Modifier
                 .size(48.dp)
                 .clip(CircleShape)
-                .background(Color(item.category.color))
+                .background(item.category.color.value)
         ) {
             Icon(
                 painter = painterResource(id = item.category.icon.resourceId),

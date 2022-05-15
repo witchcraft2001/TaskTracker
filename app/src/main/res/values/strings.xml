@@ -11,9 +11,11 @@
     <string name="new_task">Новая задача</string>
     <string name="button_save">Сохранить</string>
     <string name="text_name">Название</string>
-    <string name="text_not_chosen">Не указано</string>
+    <string name="text_not_specified">Не указано</string>
     <string name="text_network_error">Произошла сетевая ошибка, пожалуйста, проверьте подключение к сети и повторите запрос</string>
     <string name="text_category">Категория</string>
     <string name="hint_add_category">Добавить категорию</string>
     <string name="button_add_category">Добавить категорию</string>
+    <string name="text_icon">Иконка</string>
+    <string name="text_color">Цвет</string>
 </resources>

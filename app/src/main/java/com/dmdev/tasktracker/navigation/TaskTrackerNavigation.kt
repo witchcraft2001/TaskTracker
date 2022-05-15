@@ -11,7 +11,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.dmdev.tasktracker.core.extensions.getOrElse
+import com.dmdev.tasktracker.data.domain.Category
 import com.dmdev.tasktracker.ui.category_chooser.CategoryChooser
+import com.dmdev.tasktracker.ui.category_edit.CategoryEditScreen
 import com.dmdev.tasktracker.ui.home.Home
 import com.dmdev.tasktracker.ui.task_edit.TaskEdit
 
@@ -28,10 +30,19 @@ fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {
             TaskEdit(navState = appState, hiltViewModel())
         }
         composable(Screen.CategoryChooser.route, arguments = listOf(navArgument("categoryId") { nullable = true })) {
-            TaskEdit(navState = appState, hiltViewModel())
             CategoryChooser(
                 navState = appState,
                 it.arguments?.getString("categoryId")?.toLongOrNull(),
+                hiltViewModel()
+            )
+        }
+        composable(Screen.CategoryEdit.route) {
+            val category = appState.navController
+                .previousBackStackEntry?.arguments?.getParcelable<Category>(NavigationConstants.CATEGORY_ARGS_KEY)
+
+            CategoryEditScreen(
+                navState = appState,
+                category,
                 hiltViewModel()
             )
         }
@@ -61,6 +72,11 @@ class NavState(
         navController.navigate(Screen.CategoryChooser.createRoute(categoryId))
     }
 
+    fun navigateToCategoryEdit(category: Category?) {
+        navController.currentBackStackEntry?.arguments?.putParcelable(NavigationConstants.CATEGORY_ARGS_KEY, category)
+        navController.navigate(Screen.CategoryEdit.route)
+    }
+
     fun navigateToHome() {
         navController.navigate(Screen.Home.route)
     }
@@ -72,4 +88,5 @@ sealed class Screen(val route: String) {
     object CategoryChooser : Screen("categories?categoryId={categoryId}") {
         fun createRoute(categoryId: Long?) = route.replace("{categoryId}", categoryId?.toString().getOrElse(""))
     }
+    object CategoryEdit : Screen("categories/edit")
 }

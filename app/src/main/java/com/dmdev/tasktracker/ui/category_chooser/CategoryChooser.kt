@@ -9,11 +9,11 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -28,6 +28,9 @@ import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
 fun CategoryChooser(navState: NavState, categoryId: Long?, vm: CategoryChooserViewModel) {
+    LaunchedEffect(Unit) {
+        vm.reloadCategories()
+    }
     Surface(modifier = Modifier.fillMaxSize(), color = BaseTheme.colors.background) {
         Column {
             ToolbarTextWithBackAndActionButton(
@@ -35,7 +38,7 @@ fun CategoryChooser(navState: NavState, categoryId: Long?, vm: CategoryChooserVi
                 actionIcon = {
                     IconButton(
                         onClick = {
-                                  // todo: implement
+                                  navState.navigateToCategoryEdit(null)
                                   },
                         modifier = Modifier
                             .size(24.dp)
@@ -99,7 +102,7 @@ fun CategoryList(
                             modifier = Modifier
                                 .size(48.dp)
                                 .clip(CircleShape)
-                                .background(Color(items[index].color))
+                                .background(items[index].color.value)
                         ) {
                             Icon(
                                 painter = painterResource(id = items[index].icon.resourceId),

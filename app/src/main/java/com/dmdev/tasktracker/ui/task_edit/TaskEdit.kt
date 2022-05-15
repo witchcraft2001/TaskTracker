@@ -70,9 +70,9 @@ fun TaskEditForm(
             modifier = Modifier.padding(top = 16.dp),
             value = state.category?.name ?: "",
             label = stringResource(R.string.text_category),
-            hint = stringResource(R.string.text_not_chosen),
+            hint = stringResource(R.string.text_not_specified),
             isError = state.categoryError,
-            errorText = if (state.categoryError) stringResource(R.string.text_not_chosen) else "",
+            errorText = if (state.categoryError) stringResource(R.string.text_not_specified) else "",
             click = {
                 navState.navigateToCategoryChooser(state.category?.id)
             },
@@ -87,9 +87,9 @@ fun TaskEditForm(
             modifier = Modifier.padding(top = 16.dp),
             value = inputName,
             label = stringResource(id = R.string.text_name),
-            hint = stringResource(R.string.text_not_chosen),
+            hint = stringResource(R.string.text_not_specified),
             isError = state.nameError,
-            errorText = if (state.nameError) stringResource(R.string.text_not_chosen) else "",
+            errorText = if (state.nameError) stringResource(R.string.text_not_specified) else "",
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text
             ),
