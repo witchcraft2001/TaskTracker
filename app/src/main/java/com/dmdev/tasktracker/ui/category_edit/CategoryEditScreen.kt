@@ -42,7 +42,7 @@ fun CategoryEditScreen(
 
     Surface {
         Column {
-            ToolbarTextWithBack(title = stringResource(id = R.string.new_task)) {
+            ToolbarTextWithBack(title = stringResource(id = R.string.text_category)) {
                 navState.navigateBack()
             }
             when (val state = viewState.value) {
