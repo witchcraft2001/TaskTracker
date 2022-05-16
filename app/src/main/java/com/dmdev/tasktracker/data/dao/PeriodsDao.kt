@@ -10,7 +10,7 @@ import com.dmdev.tasktracker.data.data.PeriodData
 @Dao
 interface PeriodsDao {
     @Insert
-    suspend fun add(entity: PeriodData)
+    suspend fun add(entity: PeriodData) : Long
 
     @Update
     suspend fun update(entity: PeriodData)

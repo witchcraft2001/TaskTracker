@@ -23,6 +23,6 @@ enum class Colors(val value: Color) {
     BLUE_GRAY(Color(0xFFB0BEC5)),
 }
 
-fun ULong.parseColor() : Colors {
-    return Colors.values().firstOrNull { color -> color.value.value == this } ?: Colors.values().first()
+fun Long.parseColor() : Colors {
+    return Colors.values().firstOrNull { color -> color.value.value.toLong() == this } ?: Colors.values().first()
 }

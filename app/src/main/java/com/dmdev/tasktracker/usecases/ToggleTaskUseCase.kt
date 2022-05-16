@@ -10,7 +10,7 @@ class ToggleTaskUseCase @Inject constructor(
     private val periodsRepository: PeriodsRepository,
 ) {
     suspend fun execute(taskId: Long) {
-        val taskData = tasksRepository.get(taskId)
+        val taskData = tasksRepository.get(taskId) ?: return
         val endTime = System.currentTimeMillis()
 
         if (taskData.endedAt == null) {

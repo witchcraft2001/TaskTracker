@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class AddCategoryUseCase @Inject constructor(private val categoriesRepository: CategoriesRepository) {
     suspend fun execute(name: String, icon: CategoryIcon, color: Colors) {
-        categoriesRepository.add(CategoryData(0, name, color.value.value, icon))
+        categoriesRepository.add(CategoryData(0, name, color.value.value.toLong(), icon))
     }
 }

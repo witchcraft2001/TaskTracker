@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface TasksRepository {
     suspend fun getAllTasks(): Flow<ResultWrapper<List<TaskData>>>
-    suspend fun getAllUnfinishedTasks() : List<TaskData>
-    suspend fun update(task: TaskData) : TaskData
+    suspend fun getAllUnfinishedTasks(): List<TaskData>
+    suspend fun update(task: TaskData)
     suspend fun add(task: TaskData) : TaskData
-    suspend fun get(id: Long) : TaskData
+    suspend fun get(id: Long): TaskData?
 }

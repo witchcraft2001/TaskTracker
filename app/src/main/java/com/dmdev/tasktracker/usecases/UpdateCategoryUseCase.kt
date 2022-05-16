@@ -8,6 +8,6 @@ import javax.inject.Inject
 
 class UpdateCategoryUseCase @Inject constructor(private val categoriesRepository: CategoriesRepository) {
     suspend fun execute(id: Long, name: String, icon: CategoryIcon, color: Colors) {
-        categoriesRepository.update(CategoryData(id, name, color.value.value, icon))
+        categoriesRepository.update(CategoryData(id, name, color.value.value.toLong(), icon))
     }
 }
