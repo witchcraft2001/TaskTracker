@@ -1,15 +1,15 @@
-package com.dmdev.tasktracker.data.data
+package com.dmdev.tasktracker.data.entities
 
 import androidx.room.*
-import com.dmdev.tasktracker.data.data.PeriodData.Companion.PERIOD_TASK_ID_FIELD
-import com.dmdev.tasktracker.data.data.PeriodData.Companion.TABLE_NAME
+import com.dmdev.tasktracker.data.entities.PeriodEntity.Companion.PERIOD_TASK_ID_FIELD
+import com.dmdev.tasktracker.data.entities.PeriodEntity.Companion.TABLE_NAME
 
 @Entity(
     tableName = TABLE_NAME,
     foreignKeys = [
         ForeignKey(
-            entity = PeriodData::class,
-            parentColumns = arrayOf(TaskData.TASK_ID_FIELD),
+            entity = PeriodEntity::class,
+            parentColumns = arrayOf(TaskEntity.TASK_ID_FIELD),
             childColumns = arrayOf(PERIOD_TASK_ID_FIELD),
             onDelete = ForeignKey.CASCADE
         )
@@ -18,7 +18,7 @@ import com.dmdev.tasktracker.data.data.PeriodData.Companion.TABLE_NAME
         Index(PERIOD_TASK_ID_FIELD)
     ]
 )
-data class PeriodData(
+data class PeriodEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = PERIOD_ID_FIELD)
     val id: Long = 0L,

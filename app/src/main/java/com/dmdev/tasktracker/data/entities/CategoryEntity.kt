@@ -1,13 +1,13 @@
-package com.dmdev.tasktracker.data.data
+package com.dmdev.tasktracker.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.dmdev.tasktracker.data.data.CategoryData.Companion.TABLE_NAME
+import com.dmdev.tasktracker.data.CategoryIcon
+import com.dmdev.tasktracker.data.entities.CategoryEntity.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
-data class CategoryData(
+data class CategoryEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = CATEGORY_ID_FIELD)
     val id: Long,

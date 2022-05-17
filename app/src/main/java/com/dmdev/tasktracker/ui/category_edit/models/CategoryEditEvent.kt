@@ -1,7 +1,7 @@
 package com.dmdev.tasktracker.ui.category_edit.models
 
-import com.dmdev.tasktracker.data.data.CategoryIcon
-import com.dmdev.tasktracker.data.data.Colors
+import com.dmdev.tasktracker.data.CategoryIcon
+import com.dmdev.tasktracker.data.Colors
 
 sealed class CategoryEditEvent {
     data class NameChanged(val name: String) : CategoryEditEvent()

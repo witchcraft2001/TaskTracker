@@ -1,6 +1,6 @@
 package com.dmdev.tasktracker.usecases
 
-import com.dmdev.tasktracker.data.data.PeriodData
+import com.dmdev.tasktracker.data.entities.PeriodEntity
 import com.dmdev.tasktracker.repositories.PeriodsRepository
 import com.dmdev.tasktracker.repositories.TasksRepository
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class ToggleTaskUseCase @Inject constructor(
             finishAllTasks(endTime)
             val startTime = System.currentTimeMillis()
             tasksRepository.update(taskData.copy(endedAt = null))
-            val period = PeriodData(id = 0, taskId = taskId, startedAt = startTime, endedAt = null)
+            val period = PeriodEntity(id = 0, taskId = taskId, startedAt = startTime, endedAt = null)
             periodsRepository.add(period)
         }
     }

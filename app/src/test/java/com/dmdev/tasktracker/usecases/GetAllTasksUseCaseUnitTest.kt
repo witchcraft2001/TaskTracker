@@ -1,10 +1,10 @@
 package com.dmdev.tasktracker.usecases
 
 import com.dmdev.tasktracker.data.ResultWrapper
-import com.dmdev.tasktracker.data.data.CategoryData
-import com.dmdev.tasktracker.data.data.CategoryIcon
-import com.dmdev.tasktracker.data.data.PeriodData
-import com.dmdev.tasktracker.data.data.TaskData
+import com.dmdev.tasktracker.data.entities.CategoryEntity
+import com.dmdev.tasktracker.data.CategoryIcon
+import com.dmdev.tasktracker.data.entities.PeriodEntity
+import com.dmdev.tasktracker.data.entities.TaskEntity
 import com.dmdev.tasktracker.data.domain.Category
 import com.dmdev.tasktracker.data.domain.Period
 import com.dmdev.tasktracker.data.domain.Task
@@ -33,8 +33,8 @@ class GetAllTasksUseCaseUnitTest {
             emit(
                 ResultWrapper.Success(
                     listOf(
-                        TaskData(1, "Task1", 2, 0, 5, null),
-                        TaskData(2, "Task2", 1, 10, null, null)
+                        TaskEntity(1, "Task1", 2, 0, 5, null),
+                        TaskEntity(2, "Task2", 1, 10, null, null)
                     )
                 )
             )
@@ -44,8 +44,8 @@ class GetAllTasksUseCaseUnitTest {
             emit(
                 ResultWrapper.Success(
                     listOf(
-                        CategoryData(1, "Category1", 0, CategoryIcon.BROOM),
-                        CategoryData(2, "Category2", 1, CategoryIcon.CALL)
+                        CategoryEntity(1, "Category1", 0, CategoryIcon.BROOM),
+                        CategoryEntity(2, "Category2", 1, CategoryIcon.CALL)
                     )
                 )
             )
@@ -55,8 +55,8 @@ class GetAllTasksUseCaseUnitTest {
             emit(
                 ResultWrapper.Success(
                     listOf(
-                        PeriodData(1, 1, 0, 5),
-                        PeriodData(2, 2, 10, null),
+                        PeriodEntity(1, 1, 0, 5),
+                        PeriodEntity(2, 2, 10, null),
                     )
                 )
             )

@@ -1,22 +1,21 @@
-package com.dmdev.tasktracker.data.data
+package com.dmdev.tasktracker.data.entities
 
 import androidx.room.*
-import androidx.room.ForeignKey.CASCADE
 
-@Entity(tableName = TaskData.TABLE_NAME,
+@Entity(tableName = TaskEntity.TABLE_NAME,
     foreignKeys = [
         ForeignKey(
-            entity = TaskData::class,
-            parentColumns = arrayOf(CategoryData.CATEGORY_ID_FIELD),
-            childColumns = arrayOf(TaskData.TASK_CATEGORY_ID_FIELD),
+            entity = TaskEntity::class,
+            parentColumns = arrayOf(CategoryEntity.CATEGORY_ID_FIELD),
+            childColumns = arrayOf(TaskEntity.TASK_CATEGORY_ID_FIELD),
             onDelete = ForeignKey.RESTRICT
         )
     ],
     indices = [
-        Index(TaskData.TASK_CATEGORY_ID_FIELD)
+        Index(TaskEntity.TASK_CATEGORY_ID_FIELD)
     ]
 )
-data class TaskData(
+data class TaskEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = TASK_ID_FIELD)
     val id: Long,

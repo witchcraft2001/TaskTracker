@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.dmdev.tasktracker.data.data.Colors
+import com.dmdev.tasktracker.data.Colors
 import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable

@@ -1,7 +1,7 @@
 package com.dmdev.tasktracker.data.converters
 
 import androidx.room.TypeConverter
-import com.dmdev.tasktracker.data.data.CategoryIcon
+import com.dmdev.tasktracker.data.CategoryIcon
 
 class CategoryIconTypeConverter {
     @TypeConverter

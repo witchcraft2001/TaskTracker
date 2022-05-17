@@ -2,7 +2,7 @@ package com.dmdev.tasktracker.repositories
 
 import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.dao.CategoriesDao
-import com.dmdev.tasktracker.data.data.CategoryData
+import com.dmdev.tasktracker.data.entities.CategoryEntity
 import com.dmdev.tasktracker.di.modules.DefaultDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ class CategoriesRepositoryImpl @Inject constructor(
     private val categoriesDao: CategoriesDao
 ) : CategoriesRepository {
 
-    override suspend fun getAllCategories() : Flow<ResultWrapper<List<CategoryData>>> {
+    override suspend fun getAllCategories() : Flow<ResultWrapper<List<CategoryEntity>>> {
         return flow {
             emit(ResultWrapper.Loading)
             val items = categoriesDao.getAll()
@@ -25,11 +25,11 @@ class CategoriesRepositoryImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
-    override suspend fun add(category: CategoryData) {
+    override suspend fun add(category: CategoryEntity) {
         categoriesDao.add(category)
     }
 
-    override suspend fun update(category: CategoryData) {
+    override suspend fun update(category: CategoryEntity) {
         categoriesDao.update(category)
     }
 }

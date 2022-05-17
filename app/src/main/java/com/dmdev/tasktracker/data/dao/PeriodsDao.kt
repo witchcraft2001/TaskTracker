@@ -4,23 +4,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.dmdev.tasktracker.data.data.CategoryData
-import com.dmdev.tasktracker.data.data.PeriodData
+import com.dmdev.tasktracker.data.entities.PeriodEntity
 
 @Dao
 interface PeriodsDao {
     @Insert
-    suspend fun add(entity: PeriodData) : Long
+    suspend fun add(entity: PeriodEntity) : Long
 
     @Update
-    suspend fun update(entity: PeriodData)
+    suspend fun update(entity: PeriodEntity)
 
-    @Query("SELECT * from ${PeriodData.TABLE_NAME}")
-    suspend fun getAll(): List<PeriodData>
+    @Query("SELECT * from ${PeriodEntity.TABLE_NAME}")
+    suspend fun getAll(): List<PeriodEntity>
 
-    @Query("SELECT * FROM ${PeriodData.TABLE_NAME} WHERE id = :id")
-    fun getById(id: Long): PeriodData?
+    @Query("SELECT * FROM ${PeriodEntity.TABLE_NAME} WHERE id = :id")
+    fun getById(id: Long): PeriodEntity?
 
-    @Query("SELECT * FROM ${PeriodData.TABLE_NAME} WHERE ${PeriodData.PERIOD_ENDED_AT_FIELD} is null")
-    fun getAllUnfinished(): List<PeriodData>
+    @Query("SELECT * FROM ${PeriodEntity.TABLE_NAME} WHERE ${PeriodEntity.PERIOD_ENDED_AT_FIELD} is null")
+    fun getAllUnfinished(): List<PeriodEntity>
 }
