@@ -13,10 +13,10 @@ In this project I have used next libraries and technologies:
 * Clean Architecture;
 * JUnit5
 * Mockito
+* Room;
 
 In the future i plan to use libraries:
 
-* Room;
 * Retrofit;
 * kotlinx.serialization;
 * Android Jetpack WorkManager;
