@@ -22,6 +22,6 @@ interface TasksDao {
     @Query("SELECT * FROM ${TaskData.TABLE_NAME} WHERE id = :id")
     fun getById(id: Long): TaskData?
 
-    @Query("SELECT * FROM ${TaskData.TABLE_NAME} WHERE ${TaskData.PERIOD_ENDED_AT_FIELD} is null")
+    @Query("SELECT * FROM ${TaskData.TABLE_NAME} WHERE ${TaskData.TASK_ENDED_AT_FIELD} is null")
     fun getAllUnfinished(): List<TaskData>
 }
