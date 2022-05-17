@@ -8,7 +8,7 @@ import com.dmdev.tasktracker.data.entities.PeriodEntity.Companion.TABLE_NAME
     tableName = TABLE_NAME,
     foreignKeys = [
         ForeignKey(
-            entity = PeriodEntity::class,
+            entity = TaskEntity::class,
             parentColumns = arrayOf(TaskEntity.TASK_ID_FIELD),
             childColumns = arrayOf(PERIOD_TASK_ID_FIELD),
             onDelete = ForeignKey.CASCADE

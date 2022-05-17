@@ -5,7 +5,7 @@ import androidx.room.*
 @Entity(tableName = TaskEntity.TABLE_NAME,
     foreignKeys = [
         ForeignKey(
-            entity = TaskEntity::class,
+            entity = CategoryEntity::class,
             parentColumns = arrayOf(CategoryEntity.CATEGORY_ID_FIELD),
             childColumns = arrayOf(TaskEntity.TASK_CATEGORY_ID_FIELD),
             onDelete = ForeignKey.RESTRICT
