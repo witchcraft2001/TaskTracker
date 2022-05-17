@@ -1,12 +1,12 @@
 package com.dmdev.tasktracker.data.mappers
 
 import com.dmdev.tasktracker.data.domain.Task
-import com.dmdev.tasktracker.data.data.CategoryData
-import com.dmdev.tasktracker.data.data.PeriodData
-import com.dmdev.tasktracker.data.data.TaskData
+import com.dmdev.tasktracker.data.entities.CategoryEntity
+import com.dmdev.tasktracker.data.entities.PeriodEntity
+import com.dmdev.tasktracker.data.entities.TaskEntity
 
 object TaskMapper {
-    fun mapToDomain(data: TaskData, category: CategoryData, periods: List<PeriodData> = emptyList()) =
+    fun mapToDomain(data: TaskEntity, category: CategoryEntity, periods: List<PeriodEntity> = emptyList()) =
         Task(
             data.id,
             data.name,

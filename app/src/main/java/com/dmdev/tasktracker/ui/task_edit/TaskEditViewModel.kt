@@ -8,6 +8,7 @@ import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.domain.Category
 import com.dmdev.tasktracker.usecases.AddTaskUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
@@ -32,7 +33,7 @@ class TaskEditViewModel @Inject constructor(
             _state.value = state.value.copy(categoryError = true)
             updateUiState()
         } else {
-            viewModelScope.launch {
+            viewModelScope.launch(Dispatchers.IO) {
                 state.value.category?.let { category ->
                     val name = state.value.name.getOrElse("unnamed")
                     addTaskUseCase.execute(name, category).collect { result ->

@@ -17,8 +17,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
-import com.dmdev.tasktracker.data.data.CategoryIcon
-import com.dmdev.tasktracker.data.data.Colors
+import com.dmdev.tasktracker.data.CategoryIcon
+import com.dmdev.tasktracker.data.Colors
 import com.dmdev.tasktracker.data.domain.Category
 import com.dmdev.tasktracker.navigation.NavState
 import com.dmdev.tasktracker.ui.ButtonTextCenter
