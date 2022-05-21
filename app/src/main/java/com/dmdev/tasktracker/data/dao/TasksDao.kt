@@ -21,8 +21,11 @@ interface TasksDao {
             "ORDER BY p.${PeriodEntity.PERIOD_STARTED_AT_FIELD} DESC")
     suspend fun getAll(): List<TaskEntity>
 
-    @Query("SELECT * FROM ${TaskEntity.TABLE_NAME} WHERE id = :id")
+    @Query("SELECT * FROM ${TaskEntity.TABLE_NAME} WHERE ${TaskEntity.TASK_ID_FIELD} = :id")
     fun getById(id: Long): TaskEntity?
+
+    @Query("SELECT * FROM ${TaskEntity.TABLE_NAME} WHERE ${TaskEntity.TASK_ID_FIELD} IN (:idList)")
+    fun getByIdList(idList: List<Long>): List<TaskEntity>
 
     @Query("SELECT * FROM ${TaskEntity.TABLE_NAME} WHERE ${TaskEntity.TASK_ENDED_AT_FIELD} is null")
     fun getAllUnfinished(): List<TaskEntity>

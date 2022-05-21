@@ -24,7 +24,7 @@ class GetAllTasksUseCase @Inject constructor(
                 combine(
                     tasksRepository.getAllTasks(),
                     categoriesRepository.getAllCategories(),
-                    periodsRepository.getAllPeriods()
+                    periodsRepository.getAllPeriodsFlow()
                 )
                 { tasks, categories, periods ->
                     when {

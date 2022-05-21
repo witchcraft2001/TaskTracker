@@ -17,12 +17,16 @@ class PeriodsRepositoryImpl @Inject constructor(
     private val periodsDao: PeriodsDao
 ) : PeriodsRepository {
 
-    override suspend fun getAllPeriods(): Flow<ResultWrapper<List<PeriodEntity>>> {
+    override suspend fun getAllPeriodsFlow(): Flow<ResultWrapper<List<PeriodEntity>>> {
         return flow {
             emit(ResultWrapper.Loading)
             val items = periodsDao.getAll()
             emit(ResultWrapper.Success(items))
         }.flowOn(dispatcher)
+    }
+
+    override suspend fun getAllPeriods(): List<PeriodEntity> {
+        return periodsDao.getAll()
     }
 
     override suspend fun getAllUnfinishedPeriods(): List<PeriodEntity> {

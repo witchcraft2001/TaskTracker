@@ -25,6 +25,10 @@ class TasksRepositoryImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
+    override suspend fun getTasksByIds(ids: List<Long>): List<TaskEntity> {
+        return tasksDao.getByIdList(ids)
+    }
+
     override suspend fun getAllUnfinishedTasks(): List<TaskEntity> {
         return tasksDao.getAllUnfinished()
     }

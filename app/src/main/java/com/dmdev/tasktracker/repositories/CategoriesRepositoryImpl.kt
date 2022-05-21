@@ -25,6 +25,10 @@ class CategoriesRepositoryImpl @Inject constructor(
         }.flowOn(dispatcher)
     }
 
+    override suspend fun getCategoriesByIds(ids: List<Long>): List<CategoryEntity> {
+        return categoriesDao.getByIdList(ids)
+    }
+
     override suspend fun add(category: CategoryEntity) {
         categoriesDao.add(category)
     }

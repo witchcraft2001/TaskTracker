@@ -22,6 +22,10 @@ class FakeCategoriesRepository : CategoriesRepository {
         )))
     }
 
+    override suspend fun getCategoriesByIds(ids: List<Long>): List<CategoryEntity> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun add(category: CategoryEntity) {
         TODO("Not yet implemented")
     }

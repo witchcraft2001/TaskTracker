@@ -17,6 +17,9 @@ interface CategoriesDao {
     @Query("SELECT * from ${CategoryEntity.TABLE_NAME}")
     suspend fun getAll(): List<CategoryEntity>
 
+    @Query("SELECT * FROM ${CategoryEntity.TABLE_NAME} WHERE ${CategoryEntity.CATEGORY_ID_FIELD} IN (:idList)")
+    fun getByIdList(idList: List<Long>): List<CategoryEntity>
+
     @Query("SELECT * FROM ${CategoryEntity.TABLE_NAME} WHERE id = :id")
     fun getById(id: Long): CategoryEntity?
 }

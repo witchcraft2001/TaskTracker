@@ -52,7 +52,7 @@ class GetAllTasksUseCaseUnitTest {
             )
         })
 
-        Mockito.`when`(mockPeriodsRepository.getAllPeriods()).thenReturn(flow {
+        Mockito.`when`(mockPeriodsRepository.getAllPeriodsFlow()).thenReturn(flow {
             emit(
                 ResultWrapper.Success(
                     listOf(
