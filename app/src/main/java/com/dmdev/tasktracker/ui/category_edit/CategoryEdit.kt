@@ -32,7 +32,7 @@ import com.dmdev.tasktracker.ui.theme.TaskTrackerTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CategoryEditScreen(
+fun CategoryEdit(
     navState: NavState,
     category: Category?,
     vm: CategoryEditViewModel

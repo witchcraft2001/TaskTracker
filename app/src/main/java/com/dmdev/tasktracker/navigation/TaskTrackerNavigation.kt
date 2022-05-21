@@ -13,18 +13,19 @@ import androidx.navigation.navArgument
 import com.dmdev.tasktracker.core.extensions.getOrElse
 import com.dmdev.tasktracker.data.domain.Category
 import com.dmdev.tasktracker.ui.category_chooser.CategoryChooser
-import com.dmdev.tasktracker.ui.category_edit.CategoryEditScreen
+import com.dmdev.tasktracker.ui.category_edit.CategoryEdit
 import com.dmdev.tasktracker.ui.home.Home
+import com.dmdev.tasktracker.ui.reports.Reports
 import com.dmdev.tasktracker.ui.task_edit.TaskEdit
 
 @Composable
-fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {
+fun TaskTrackerNavigation(appState: NavState = rememberNavState(), openDrawer: () -> Unit) {
     NavHost(
         navController = appState.navController,
         startDestination = Screen.Home.route
     ) {
         composable(Screen.Home.route) {
-            Home(navState = appState, hiltViewModel())
+            Home(navState = appState, hiltViewModel(), openDrawer = openDrawer)
         }
         composable(Screen.TaskEdit.route) {
             TaskEdit(navState = appState, hiltViewModel())
@@ -40,11 +41,14 @@ fun TaskTrackerNavigation(appState: NavState = rememberNavState()) {
             val category = appState.navController
                 .previousBackStackEntry?.arguments?.getParcelable<Category>(NavigationConstants.CATEGORY_ARGS_KEY)
 
-            CategoryEditScreen(
+            CategoryEdit(
                 navState = appState,
                 category,
                 hiltViewModel()
             )
+        }
+        composable(Screen.Reports.route) {
+            Reports(navState = appState, openDrawer = openDrawer)
         }
     }
 }
@@ -84,6 +88,7 @@ class NavState(
 
 sealed class Screen(val route: String) {
     object Home : Screen("home")
+    object Reports : Screen("reports")
     object TaskEdit : Screen("tasks/edit")
     object CategoryChooser : Screen("categories?categoryId={categoryId}") {
         fun createRoute(categoryId: Long?) = route.replace("{categoryId}", categoryId?.toString().getOrElse(""))

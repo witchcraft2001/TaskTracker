@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dmdev.tasktracker.R
-import com.dmdev.tasktracker.core.common.UiState
 import com.dmdev.tasktracker.core.extensions.getOrElse
 import com.dmdev.tasktracker.navigation.NavState
 import com.dmdev.tasktracker.ui.ButtonTextCenter
@@ -33,6 +32,7 @@ import com.dmdev.tasktracker.ui.theme.BaseTheme
 fun Home(
     navState: NavState,
     vm: HomeViewModel,
+    openDrawer: () -> Unit
 ) {
     LaunchedEffect(Unit) {
         vm.obtainEvent(TaskListEvent.ReloadEvent)
@@ -42,6 +42,19 @@ fun Home(
         Column {
             ToolbarTextWithActionButton(
                 title = stringResource(R.string.app_name),
+                menuIcon = {
+                    IconButton(
+                        onClick = { openDrawer() },
+                        modifier = Modifier
+                            .size(24.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_burger),
+                            contentDescription = stringResource(R.string.hint_menu),
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                },
                 actionIcon = {
                     IconButton(
                         onClick = { navState.navigateToTaskEdit() },

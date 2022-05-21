@@ -171,9 +171,35 @@ fun ToolbarTextWithBack(
     }
 }
 
+//@Composable
+//fun ToolbarTextWithActionButton(
+//    title: String,
+//    actionIcon: @Composable (() -> Unit)? = null
+//) {
+//    Box(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(16.dp)
+//    ) {
+//        Text(
+//            text = title,
+//            textAlign = TextAlign.Center,
+//            color = BaseTheme.colors.textBlack,
+//            style = BaseTheme.typography.title2,
+//            modifier = Modifier.align(Alignment.Center)
+//        )
+//        if (actionIcon != null) {
+//            Box(modifier = Modifier.align(Alignment.CenterEnd)) {
+//                actionIcon()
+//            }
+//        }
+//    }
+//}
+
 @Composable
 fun ToolbarTextWithActionButton(
     title: String,
+    menuIcon: @Composable (() -> Unit)? = null,
     actionIcon: @Composable (() -> Unit)? = null
 ) {
     Box(
@@ -181,6 +207,11 @@ fun ToolbarTextWithActionButton(
             .fillMaxWidth()
             .padding(16.dp)
     ) {
+        if (menuIcon != null) {
+            Box(modifier = Modifier.align(Alignment.CenterStart)) {
+                menuIcon()
+            }
+        }
         Text(
             text = title,
             textAlign = TextAlign.Center,

@@ -18,4 +18,5 @@
     <string name="button_add_category">Добавить категорию</string>
     <string name="text_icon">Иконка</string>
     <string name="text_color">Цвет</string>
+    <string name="hint_menu">Меню приложения</string>
 </resources>
