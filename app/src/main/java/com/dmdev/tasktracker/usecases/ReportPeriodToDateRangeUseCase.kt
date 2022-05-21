@@ -20,9 +20,17 @@ class ReportPeriodToDateRangeUseCase @Inject constructor(
     }
 
     private fun getLastThirtyDaysPeriod(): DateRange {
-        val end = timeProvider.getCurrentDate()
+        val end = Calendar.getInstance().apply {
+            time = timeProvider.getCurrentDate()
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.MILLISECOND, -1)
+        }.time
         val start = Calendar.getInstance().apply {
             time = end
+            add(Calendar.MILLISECOND, 1)
             add(Calendar.DAY_OF_MONTH, -30)
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
@@ -41,8 +49,10 @@ class ReportPeriodToDateRangeUseCase @Inject constructor(
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
+            add(Calendar.MILLISECOND, -1)
         }
         val start = (end.clone() as Calendar).apply {
+            add(Calendar.MILLISECOND, 1)
             add(Calendar.YEAR, -1)
         }
         return DateRange(start = start.time, end = end.time)
@@ -66,8 +76,10 @@ class ReportPeriodToDateRangeUseCase @Inject constructor(
         }
         val end = (calendar.clone() as Calendar).apply {
             set(Calendar.MONTH, endMonth)
+            add(Calendar.MILLISECOND, -1)
         }
         val start = (end.clone() as Calendar).apply {
+            add(Calendar.MILLISECOND, 1)
             add(Calendar.MONTH, -3)
         }
         return DateRange(start = start.time, end = end.time)
@@ -81,23 +93,32 @@ class ReportPeriodToDateRangeUseCase @Inject constructor(
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
+            add(Calendar.MILLISECOND, -1)
         }
         val start = (end.clone() as Calendar).apply {
+            add(Calendar.MILLISECOND, 1)
             add(Calendar.MONTH, -1)
         }
         return DateRange(start = start.time, end = end.time)
     }
 
     private fun getLastSevenDaysPeriod(): DateRange {
-        val end = timeProvider.getCurrentDate()
+        val end = Calendar.getInstance().apply {
+            time = timeProvider.getCurrentDate()
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.MILLISECOND, -1)
+        }
         val start = Calendar.getInstance().apply {
-            time = end
+            time = timeProvider.getCurrentDate()
             add(Calendar.DAY_OF_MONTH, -7)
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
         }
-        return DateRange(start = start.time, end = end)
+        return DateRange(start = start.time, end = end.time)
     }
 }
