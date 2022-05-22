@@ -4,14 +4,18 @@ import com.dmdev.tasktracker.data.ResultWrapper
 import com.dmdev.tasktracker.data.domain.DateRange
 import com.dmdev.tasktracker.data.domain.Task
 import com.dmdev.tasktracker.data.mappers.TaskMapper
+import com.dmdev.tasktracker.di.modules.DefaultDispatcher
 import com.dmdev.tasktracker.repositories.CategoriesRepository
 import com.dmdev.tasktracker.repositories.PeriodsRepository
 import com.dmdev.tasktracker.repositories.TasksRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GetTasksReportInPeriodUseCase @Inject constructor(
+    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     private val tasksRepository: TasksRepository,
     private val periodsRepository: PeriodsRepository,
     private val categoriesRepository: CategoriesRepository,
@@ -44,5 +48,6 @@ class GetTasksReportInPeriodUseCase @Inject constructor(
                 emit(ResultWrapper.Error(e))
             }
         }
+            .flowOn(dispatcher)
     }
 }
