@@ -27,12 +27,13 @@ class GetTasksReportInPeriodUseCase @Inject constructor(
                 val allPeriods = periodsRepository.getAllPeriods()
                 val filtered = allPeriods.filter { item ->
                     period.start.time <= item.startedAt && period.end.time >= item.startedAt ||
-                            period.start.time >= item.startedAt && item.endedAt == null || period.end.time <= item.startedAt ||
+                            period.start.time >= item.startedAt && (item.endedAt == null || period.end.time >= item.startedAt) ||
                             item.endedAt != null && period.start.time <= item.endedAt && period.end.time >= item.endedAt
                 }.map { item ->
+                    val end = item.endedAt ?: period.end.time
                     item.copy(
                         startedAt = if (item.startedAt < period.start.time) period.start.time else item.startedAt,
-                        endedAt = item.endedAt ?: period.end.time
+                        endedAt = if (end > period.end.time) period.end.time else end
                     )
                 }
                 val tasks = tasksRepository.getTasksByIds(filtered.map { item -> item.id }.distinct())

@@ -8,7 +8,9 @@ sealed class ReportsViewState {
         val isLoading: Boolean = false,
         val period: ReportPeriod = ReportPeriod.LAST_SEVEN_DAYS,
         val dateRange: DateRange? = null,
-        val dateRangeString: String = ""
+        val dateRangeString: String = "",
+        val report: List<ReportModel> = emptyList(),
+        val circleData: ReportCircleItemModel? = null
     ) : ReportsViewState()
 
     data class ErrorReportViewState(

@@ -1,14 +1,12 @@
 package com.dmdev.tasktracker.ui.reports
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -91,9 +89,24 @@ fun ReportShow(
         )
 
         Text(
-            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth(),
             text = state.dateRangeString,
             style = BaseTheme.typography.text14R
         )
+
+        state.circleData?.let { data ->
+            Box(Modifier.padding(16.dp)) {
+                AnimatedCircle(
+                    data.proportions,
+                    colors = data.colors,
+                    Modifier
+                        .height(300.dp)
+                        .align(Alignment.Center)
+                        .fillMaxWidth()
+                )
+            }
+        }
     }
 }
