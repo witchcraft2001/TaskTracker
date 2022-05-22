@@ -57,7 +57,7 @@ fun DropdownList(
         Box(
             modifier = Modifier
                 .padding(top = 8.dp)
-                .fillMaxSize()
+                .fillMaxWidth()
                 .wrapContentSize(Alignment.TopStart)
                 .clip(RoundedCornerShape(6.dp))
                 .background(BaseTheme.colors.bgGray),
