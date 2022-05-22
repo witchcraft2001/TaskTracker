@@ -48,7 +48,11 @@ fun TaskTrackerNavigation(appState: NavState = rememberNavState(), openDrawer: (
             )
         }
         composable(Screen.Reports.route) {
-            Reports(navState = appState, openDrawer = openDrawer)
+            Reports(
+                navState = appState,
+                openDrawer = openDrawer,
+                hiltViewModel()
+            )
         }
     }
 }
@@ -93,5 +97,6 @@ sealed class Screen(val route: String) {
     object CategoryChooser : Screen("categories?categoryId={categoryId}") {
         fun createRoute(categoryId: Long?) = route.replace("{categoryId}", categoryId?.toString().getOrElse(""))
     }
+
     object CategoryEdit : Screen("categories/edit")
 }

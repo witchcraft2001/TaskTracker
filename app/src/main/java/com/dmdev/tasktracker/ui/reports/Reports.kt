@@ -1,6 +1,7 @@
 package com.dmdev.tasktracker.ui.reports
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -25,6 +26,7 @@ import com.dmdev.tasktracker.ui.home.models.TaskListEvent
 import com.dmdev.tasktracker.ui.home.models.TaskListViewState
 import com.dmdev.tasktracker.ui.reports.models.ReportsEvent
 import com.dmdev.tasktracker.ui.reports.models.ReportsViewState
+import com.dmdev.tasktracker.ui.theme.BaseTheme
 
 @Composable
 fun Reports(
@@ -78,6 +80,7 @@ fun ReportShow(
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
         DropdownList(
+            modifier = Modifier.padding(top = 16.dp),
             items = ReportPeriod.values().map { stringResource(it.id) }.toList(),
             selectedItem = state.period,
             label = stringResource(R.string.text_period),
@@ -85,6 +88,12 @@ fun ReportShow(
             onSelectedIndexChanged = { index ->
                 onPeriodChanged(ReportPeriod.values()[index])
             }
+        )
+
+        Text(
+            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+            text = state.dateRangeString,
+            style = BaseTheme.typography.text14R
         )
     }
 }
