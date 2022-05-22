@@ -2,6 +2,7 @@ package com.dmdev.tasktracker.di.modules
 
 import android.content.Context
 import androidx.room.Room
+import com.dmdev.tasktracker.BuildConfig
 import com.dmdev.tasktracker.data.dao.CategoriesDao
 import com.dmdev.tasktracker.data.dao.PeriodsDao
 import com.dmdev.tasktracker.data.dao.TaskTrackerDatabase
@@ -23,8 +24,11 @@ class RoomModule {
             context.applicationContext,
             TaskTrackerDatabase::class.java,
             "tasks_db"
-        )
-            .fallbackToDestructiveMigration()
+        ).apply {
+            if (BuildConfig.DEBUG) {
+                fallbackToDestructiveMigration()
+            }
+        }
             .build()
 
     @Provides
