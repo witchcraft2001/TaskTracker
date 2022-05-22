@@ -19,4 +19,12 @@
     <string name="text_icon">Иконка</string>
     <string name="text_color">Цвет</string>
     <string name="hint_menu">Меню приложения</string>
+    <string name="text_reports">Отчеты</string>
+    <string name="text_period">Период</string>
+    <string name="hint_choose_period">Выберите период</string>
+    <string name="text_last_seven_days">Последние 7 дней</string>
+    <string name="text_last_thirty_days">Последние 30 дней</string>
+    <string name="text_last_month">Последний месяц</string>
+    <string name="text_last_quarter">Последний квартал</string>
+    <string name="text_last_year">Последний год</string>
 </resources>
